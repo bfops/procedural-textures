@@ -172,7 +172,7 @@ fn make_pixels<'a, 'b:'a>(
     let ram_pixels: &mut [[[f32; 3]; WINDOW_WIDTH as usize]; WINDOW_HEIGHT as usize] = unsafe {
       mem::transmute(ram_pixels.as_ptr())
     };
-    let tex = texture::perlin::new();
+    let tex = texture::dirt::new();
   
     for y in 0..WINDOW_HEIGHT as usize {
     for x in 0..WINDOW_WIDTH as usize {

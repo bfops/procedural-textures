@@ -1,3 +1,6 @@
+#![allow(unused)]
+
+pub mod dirt;
 pub mod perlin;
 
 pub trait T {
