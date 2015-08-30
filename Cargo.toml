@@ -1,0 +1,31 @@
+[package]
+
+name = "procedural-textures"
+version = "0.0.0"
+authors = [
+  "Zeke Foppa <benjamin.foppa@gmail.com>",
+]
+
+[[bin]]
+
+name = "main"
+path = "./src/mod.rs"
+
+[dependencies]
+log = "*"
+rand = "*"
+
+[dependencies.noise]
+git = "https://github.com/bjz/noise-rs"
+
+[dependencies.gl]
+git = "https://github.com/bjz/gl-rs"
+
+[dependencies.yaglw]
+git = "https://github.com/bfops/yaglw"
+
+[dependencies.sdl2]
+git = "https://github.com/AngryLawyer/rust-sdl2"
+
+[dependencies.stopwatch]
+git = "https://github.com/bfops/stopwatch-rs"
