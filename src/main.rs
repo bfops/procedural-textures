@@ -1,3 +1,4 @@
+use env_logger;
 use gl;
 use gl::types::GLint;
 use std;
@@ -5,7 +6,7 @@ use std::mem;
 use sdl2;
 use sdl2::event::Event;
 use sdl2::video;
-use stopwatch::TimerSet;
+use stopwatch;
 use yaglw::gl_context::GLContext;
 use yaglw::shader::Shader;
 use yaglw::texture::{BufferTexture, TextureUnit};
@@ -18,7 +19,7 @@ pub const WINDOW_WIDTH: u32 = 800;
 pub const WINDOW_HEIGHT: u32 = 800;
 
 pub fn main() {
-  let timers = TimerSet::new();
+  env_logger::init().unwrap();
 
   let sdl = sdl2::init().unwrap();
   let _event = sdl.event().unwrap();
@@ -49,7 +50,7 @@ pub fn main() {
   shader.use_shader(gl);
 
   let pixels = make_pixels(gl);
-  println!("Done loading");
+  info!("Done loading");
 
   {
     let mut bind = |name, id| {
@@ -73,12 +74,12 @@ pub fn main() {
     gl::BindVertexArray(empty_vao.gl_id);
   }
 
-  println!("Looping");
+  info!("Looping");
 
   let mut event_pump = sdl.event_pump().unwrap();
 
   while process_events(&mut event_pump) {
-    timers.time("draw", || {
+    stopwatch::time("draw", || {
       gl.clear_buffer();
       unsafe {
         gl::DrawArrays(gl::TRIANGLE_STRIP, 0, 4);
@@ -90,7 +91,8 @@ pub fn main() {
     std::thread::sleep_ms(10);
   }
 
-  timers.print();
+  info!("Done");
+  stopwatch::clone().print();
 }
 
 fn make_shader<'a, 'b:'a>(
@@ -153,7 +155,7 @@ fn make_window(video: &sdl2::VideoSubsystem) -> video::Window {
       WINDOW_WIDTH, WINDOW_HEIGHT,
     );
 
-  let window = window.position_centered();
+  let window = window.position(0, 0);
   window.opengl();
 
   window.build().unwrap()

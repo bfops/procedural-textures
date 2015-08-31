@@ -1,6 +1,9 @@
 #![feature(convert)]
 #![cfg_attr(test, feature(test))]
 
+#![allow(unused)]
+
+extern crate env_logger;
 extern crate gl;
 #[macro_use]
 extern crate log;
