@@ -14,7 +14,7 @@ extern crate stopwatch;
 extern crate yaglw;
 
 mod main;
-mod texture;
+mod shader;
 
 pub fn main() {
   main::main();
