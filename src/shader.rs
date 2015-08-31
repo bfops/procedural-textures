@@ -204,7 +204,7 @@ fn grass() -> String {
   "#, cnoise(), contents)
 }
 
-fn dirt() -> String {
+fn bark() -> String {
   struct Wave {
     freq: f32,
     amp: f32,
@@ -256,12 +256,60 @@ fn dirt() -> String {
   "#, cnoise(), contents)
 }
 
+
+fn dirt() -> String {
+  struct Wave {
+    freq: f32,
+    amp: f32,
+  }
+
+  let waves = [
+    Wave { freq: 1.0 / 128.0, amp: 0.4 },
+    Wave { freq: 1.0 / 4.0,   amp: 1.0 },
+  ];
+
+  let mut contents = String::new();
+  for wave in waves.iter() {
+    contents.push_str(format!(r#"
+    {{
+      float freq = {};
+      float amp = {};
+
+      float dnoise = cnoise(freq * gl_FragCoord.xyz);
+      noise += dnoise * amp;
+      total_amp += amp;
+    }}
+    "#, wave.freq, wave.amp).as_str());
+  }
+
+  format!(r#"
+  #version 330 core
+
+  in vec4 world_pos;
+
+  layout(location=0) out vec4 frag_color;
+
+  // include cnoise
+  {}
+
+  void main() {{
+    float total_amp = 0.0;
+    float noise = 0.0;
+    {}
+    noise /= total_amp;
+    noise = (noise + 1) / 2;
+    float lerp = 0.2 * noise;
+    frag_color = vec4(0.3 + lerp, 0.2 + lerp, lerp, 1);
+  }}
+  "#, cnoise(), contents)
+}
+
 pub fn make<'a, 'b:'a>(
   gl: &'a GLContext,
 ) -> Shader<'b> {
   let components = vec!(
     (gl::VERTEX_SHADER, vertex()),
-    (gl::FRAGMENT_SHADER, grass()),
+    (gl::FRAGMENT_SHADER, dirt()),
   );
 
   Shader::new(gl, components.into_iter())
