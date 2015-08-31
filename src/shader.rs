@@ -164,8 +164,9 @@ fn dirt() -> String {
   let waves = [
     Wave { freq: 8.0,   amp: 1.0 },
     Wave { freq: 16.0,  amp: 0.6 },
-    Wave { freq: 64.0,  amp: 0.2 },
+    Wave { freq: 32.0,  amp: 0.4 },
     Wave { freq: 128.0, amp: 0.4 },
+    Wave { freq: 256.0, amp: 0.4 },
   ];
 
   let mut contents = String::new();
@@ -177,7 +178,7 @@ fn dirt() -> String {
 
       float dnoise = cnoise(freq * xyz);
       // sharpen
-      dnoise = sign(dnoise) * sqrt(abs(dnoise));
+      dnoise = sign(dnoise) * pow(abs(dnoise), 0.2);
       noise += dnoise * amp;
       total_amp += amp;
     }}
