@@ -264,7 +264,7 @@ fn dirt() -> String {
   }
 
   let waves = [
-    Wave { freq: 1.0 / 128.0, amp: 0.4 },
+    Wave { freq: 1.0 / 128.0, amp: 0.6 },
     Wave { freq: 1.0 / 4.0,   amp: 1.0 },
   ];
 
