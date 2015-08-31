@@ -162,11 +162,11 @@ fn dirt() -> String {
   }
 
   let waves = [
-    Wave { freq: 8.0,   amp: 1.0 },
-    Wave { freq: 16.0,  amp: 0.6 },
-    Wave { freq: 32.0,  amp: 0.4 },
-    Wave { freq: 128.0, amp: 0.4 },
-    Wave { freq: 256.0, amp: 0.4 },
+    Wave { freq: 8.0   / 1000.0,  amp: 1.0 },
+    Wave { freq: 16.0  / 1000.0, amp: 0.6 },
+    Wave { freq: 32.0  / 1000.0, amp: 0.4 },
+    Wave { freq: 128.0 / 1000.0, amp: 0.4 },
+    Wave { freq: 256.0 / 1000.0, amp: 0.4 },
   ];
 
   let mut contents = String::new();
@@ -176,7 +176,7 @@ fn dirt() -> String {
       float freq = {};
       float amp = {};
 
-      float dnoise = cnoise(freq * xyz);
+      float dnoise = cnoise(freq * gl_FragCoord.xyz);
       // sharpen
       dnoise = sign(dnoise) * pow(abs(dnoise), 0.2);
       noise += dnoise * amp;
@@ -196,7 +196,6 @@ fn dirt() -> String {
   {}
 
   void main() {{
-    vec3 xyz = gl_FragCoord.xyz / 1000;
     float total_amp = 0.0;
     float noise = 0.0;
     {}
