@@ -6,6 +6,9 @@ This repository is a sandbox for procedurally generating textures.
 ## Dirt
 ![dirt](screenshots/dirt.png?raw=true)
 
+## Stone
+![stone](screenshots/stone.png?raw=true)
+
 ## Grass
 ![grass](screenshots/grass.png?raw=true)
 
